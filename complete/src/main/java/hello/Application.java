@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.querydsl.core.types.Predicate;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -30,6 +32,14 @@ public class Application implements CommandLineRunner {
 		for (Customer customer : repository.findAll()) {
 			System.out.println(customer);
 		}
+		System.out.println();
+
+		// fetch an individual customer
+		System.out.println("Customer found with findByFirstName('Alice') with querydsl:");
+		System.out.println("--------------------------------");
+		QCustomer qCustomer = QCustomer.customer;
+		Predicate predicate = qCustomer.firstName.eq("Alice");
+		System.out.println(repository.findAll(predicate));
 		System.out.println();
 
 		// fetch an individual customer
